@@ -4,7 +4,7 @@ app=Flask(__name__)
 
 @app.route("/getUrl")
 def home():
-    return ""
+    return "ok Done"
 
 
 if __name__ == "__main__":
