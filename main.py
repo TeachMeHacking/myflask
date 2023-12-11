@@ -2,7 +2,7 @@ from flask import Flask
 
 app=Flask(__name__)
 
-@app.route("/getUrl")
+@app.route('/getUrl', methods=['GET'])
 def home():
     return "ok Done"
 
