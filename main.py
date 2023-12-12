@@ -17,6 +17,7 @@ def postUrl():
     map = {}
     url1 = request.args.get("url")
     password = request.args.get("password")
+    socketio.emit("UrlData","OK POST")
     if(str(password) == "OKDONE"):
         global url
         map ={
