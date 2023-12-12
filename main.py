@@ -1,16 +1,17 @@
-from flask import Flask,request
+from flask import Flask, request
+from flask_socketio import SocketIO,send,emit
 
-app=Flask(__name__)
-
+app = Flask(__name__)
+socketio = SocketIO(app)
 
 url  = None
 
 
-
-@app.route('/')
-def wlcome():
-    return "Wlcome On My Site"
-
+@socketio.on('connect')
+def test_connect():
+    print('Client connected')
+    
+    
 @app.route('/postUrl', methods=['POST'])
 def postUrl():
     map = {}
@@ -24,7 +25,12 @@ def postUrl():
             "Error Code" : 0
         }
         url = str(url1)
-        print(str(url))
+        mapOK ={
+            "Url" : url,
+            "Success" : 0,
+            "Error Code" : 0
+        }
+        socketio.emit("UrlData",mapOK)
     else:
         map = {
             "Message" : "Url NOT ADD",
@@ -39,17 +45,22 @@ def getUrl():
     map = {}
     if url == None:
         map = {
-            "Url " : "Not Available Url",
+            "Message " : "Null",
             "Success" : -1,
             "Error Code" : -1
                }
     else:
            map = {
-            "Url " : url,
+            "Message " : url,
             "Success" : 0,
             "Error Code" : 0
             }
     return map
 
-if __name__ == "__main__":
-    app.run()#(debug=False,host='0.0.0.0')
+
+@app.route('/')
+def index():
+    return 'index.html'
+
+if __name__ == '__main__':
+    socketio.run(app)
