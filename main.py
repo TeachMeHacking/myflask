@@ -39,13 +39,13 @@ def getUrl():
     map = {}
     if url == None:
         map = {
-            "Message " : "Null",
+            "Url " : "Not Available Url",
             "Success" : -1,
             "Error Code" : -1
                }
     else:
            map = {
-            "Message " : url,
+            "Url " : url,
             "Success" : 0,
             "Error Code" : 0
             }
