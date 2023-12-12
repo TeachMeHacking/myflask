@@ -3,7 +3,7 @@ from flask import Flask,request
 app=Flask(__name__)
 
 
-url  = ""
+url  = None
 
 
 
@@ -13,28 +13,43 @@ def wlcome():
 
 @app.route('/postUrl', methods=['POST'])
 def postUrl():
+    map = {}
     url1 = request.args.get("url")
-    global url
-    url = str(url1)
-    return url
+    password = request.args.get("password")
+    if(str(password) == "OKDONE"):
+        global url
+        map ={
+            "Message" : "URL ADD SUCCESS FULL",
+            "Success" : 0,
+            "Error Code" : 0
+        }
+        url = str(url1)
+        print(str(url))
+    else:
+        map = {
+            "Message" : "Url NOT ADD",
+            "Success" : -1,
+            "Error Code" : -1
+        }     
+    return map
 
 
 @app.route('/getUrl', methods=['GET'])
 def getUrl():
-    Url = {}
+    map = {}
     if url == None:
-        Url = {
-            "Url" : "Null",
+        map = {
+            "Message " : "Null",
             "Success" : -1,
             "Error Code" : -1
                }
     else:
-           Url = {
-            "Url" : url,
+           map = {
+            "Message " : url,
             "Success" : 0,
             "Error Code" : 0
             }
-    return Url
+    return map
 
 if __name__ == "__main__":
     app.run()#(debug=False,host='0.0.0.0')
