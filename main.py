@@ -8,7 +8,7 @@ url  = ""
 
 
 @app.route('/')
-def postUrl():
+def wlcome():
     return "Wlcome On My Site"
 
 @app.route('/postUrl', methods=['POST'])
