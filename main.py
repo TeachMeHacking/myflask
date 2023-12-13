@@ -1,10 +1,9 @@
-import logging
 from flask import Flask
 from flask_socketio import SocketIO, emit
 
 # Creating a flask app and using it to instantiate a socket object
 app = Flask(__name__)
-socketio = SocketIO(app, cors_allowed_origins="*")
+socketio = SocketIO(app)
 
 # values['slider1'] and values['slider2'] store the current value of the sliders
 # This is done to prevent data loss on page reload by client.
@@ -13,14 +12,13 @@ socketio = SocketIO(app, cors_allowed_origins="*")
 # Using jinja template to render html along with slider value as input
 @app.route('/')
 def index():
-    return 'index.html'
+    return 'index'
 
 # Handler for a message recieved over 'connect' channel
 @socketio.on('connect')
 def test_connect():
-    logging.info("Just an information")
     emit('after connect',  {'data':'Lets dance'})
 
 # Notice how socketio.run takes care of app instantiation as well.
 if __name__ == '__main__':
-    socketio.run(app, host='0.0.0.0')
+    socketio.run(app)
