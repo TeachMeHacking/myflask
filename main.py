@@ -1,67 +1,26 @@
-from flask import Flask, request
-from flask_socketio import SocketIO,send,emit
+import logging
+from flask import Flask
+from flask_socketio import SocketIO, emit
 
+# Creating a flask app and using it to instantiate a socket object
 app = Flask(__name__)
 socketio = SocketIO(app)
 
-url  = None
+# values['slider1'] and values['slider2'] store the current value of the sliders
+# This is done to prevent data loss on page reload by client.
 
-
-@socketio.on('connect')
-def test_connect():
-    print('Client connected')
-    
-    
-@app.route('/postUrl', methods=['POST'])
-def postUrl():
-    map = {}
-    url1 = request.args.get("url")
-    password = request.args.get("password")
-    socketio.emit("UrlData",{"data":"ashasas"})
-    if(str(password) == "OKDONE"):
-        global url
-        map ={
-            "Message" : "URL ADD SUCCESS FULL",
-            "Success" : 0,
-            "Error Code" : 0
-        }
-        url = str(url1)
-        mapOK ={
-            "Url" : url,
-            "Success" : 0,
-            "Error Code" : 0
-        }
-        socketio.emit("UrlData",mapOK)
-    else:
-        map = {
-            "Message" : "Url NOT ADD",
-            "Success" : -1,
-            "Error Code" : -1
-        }     
-    return map
-
-
-@app.route('/getUrl', methods=['GET'])
-def getUrl():
-    map = {}
-    if url == None:
-        map = {
-            "Message " : "Null",
-            "Success" : -1,
-            "Error Code" : -1
-               }
-    else:
-           map = {
-            "Message " : url,
-            "Success" : 0,
-            "Error Code" : 0
-            }
-    return map
-
-
+# Handler for default flask route
+# Using jinja template to render html along with slider value as input
 @app.route('/')
 def index():
     return 'index.html'
 
+# Handler for a message recieved over 'connect' channel
+@socketio.on('connect')
+def test_connect():
+    logging.info("Just an information")
+    emit('after connect',  {'data':'Lets dance'})
+
+# Notice how socketio.run takes care of app instantiation as well.
 if __name__ == '__main__':
-    socketio.run(app)
+    socketio.run(app, host='0.0.0.0')
