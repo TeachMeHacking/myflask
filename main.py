@@ -17,6 +17,7 @@ def index():
 # Handler for a message recieved over 'connect' channel
 @socketio.on('connect')
 def test_connect():
+    print("Just an information")
     emit('after connect',  {'data':'Lets dance'})
 
 # Notice how socketio.run takes care of app instantiation as well.
