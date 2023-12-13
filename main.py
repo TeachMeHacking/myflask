@@ -1,26 +1,67 @@
-from flask import Flask
-from flask_socketio import SocketIO, emit
+from flask import Flask, request
+from flask_socketio import SocketIO,send,emit
 
-# Creating a flask app and using it to instantiate a socket object
 app = Flask(__name__)
 socketio = SocketIO(app)
 
-# values['slider1'] and values['slider2'] store the current value of the sliders
-# This is done to prevent data loss on page reload by client.
+url  = None
 
-# Handler for default flask route
-# Using jinja template to render html along with slider value as input
-@app.route('/')
-def index():
-    print("Just an information")
-    return 'index'
 
-# Handler for a message recieved over 'connect' channel
 @socketio.on('connect')
 def test_connect():
-    print("Just an information")
-    emit('after connect',  {'data':'Lets dance'})
+    print('Client connected')
+    
+    
+@app.route('/postUrl', methods=['POST'])
+def postUrl():
+    map = {}
+    url1 = request.args.get("url")
+    password = request.args.get("password")
+    emit("UrlData",{"data":"ashasas"})
+    if(str(password) == "OKDONE"):
+        global url
+        map ={
+            "Message" : "URL ADD SUCCESS FULL",
+            "Success" : 0,
+            "Error Code" : 0
+        }
+        url = str(url1)
+        mapOK ={
+            "Url" : url,
+            "Success" : 0,
+            "Error Code" : 0
+        }
+        emit("UrlData",mapOK)
+    else:
+        map = {
+            "Message" : "Url NOT ADD",
+            "Success" : -1,
+            "Error Code" : -1
+        }     
+    return map
 
-# Notice how socketio.run takes care of app instantiation as well.
+
+@app.route('/getUrl', methods=['GET'])
+def getUrl():
+    map = {}
+    if url == None:
+        map = {
+            "Message " : "Null",
+            "Success" : -1,
+            "Error Code" : -1
+               }
+    else:
+           map = {
+            "Message " : url,
+            "Success" : 0,
+            "Error Code" : 0
+            }
+    return map
+
+
+@app.route('/')
+def index():
+    return 'index.html'
+
 if __name__ == '__main__':
     socketio.run(app)
