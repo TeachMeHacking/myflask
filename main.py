@@ -12,6 +12,7 @@ socketio = SocketIO(app)
 # Using jinja template to render html along with slider value as input
 @app.route('/')
 def index():
+    print("Just an information")
     return 'index'
 
 # Handler for a message recieved over 'connect' channel
