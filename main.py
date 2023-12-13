@@ -4,7 +4,7 @@ from flask_socketio import SocketIO, emit
 
 # Creating a flask app and using it to instantiate a socket object
 app = Flask(__name__)
-socketio = SocketIO(app)
+socketio = SocketIO(app, cors_allowed_origins="*")
 
 # values['slider1'] and values['slider2'] store the current value of the sliders
 # This is done to prevent data loss on page reload by client.
