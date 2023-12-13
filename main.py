@@ -17,7 +17,7 @@ def postUrl():
     map = {}
     url1 = request.args.get("url")
     password = request.args.get("password")
-    emit("UrlData",{"data":"ashasas"})
+    
     if(str(password) == "OKDONE"):
         global url
         map ={
@@ -31,7 +31,7 @@ def postUrl():
             "Success" : 0,
             "Error Code" : 0
         }
-        emit("UrlData",mapOK)
+        emit("UrlData",{"data":"Ok Done"})
     else:
         map = {
             "Message" : "Url NOT ADD",
