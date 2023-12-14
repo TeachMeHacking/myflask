@@ -10,6 +10,7 @@ url  = None
 @socketio.on('connect')
 def test_connect():
     print('Client connected')
+    socketio.emit("UrlData",{"data":"ashasas"})
     
     
 @app.route('/postUrl', methods=['POST'])
