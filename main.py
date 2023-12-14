@@ -32,7 +32,7 @@ def postUrl():
             "Success" : 0,
             "Error Code" : 0
         }
-        emit("UrlData",{"data":"Ok Done"})
+        socketio.emit("UrlData",mapOK)
     else:
         map = {
             "Message" : "Url NOT ADD",
