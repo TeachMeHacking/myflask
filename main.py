@@ -18,7 +18,6 @@ def postUrl():
     map = {}
     url1 = request.args.get("url")
     password = request.args.get("password")
-    socketio.emit("UrlData",{"data":"ashasas"})
     if(str(password) == "OKDONE"):
         global url
         map ={
@@ -47,13 +46,13 @@ def getUrl():
     map = {}
     if url == None:
         map = {
-            "Message " : "Null",
+            "Url " : "Null",
             "Success" : -1,
             "Error Code" : -1
                }
     else:
            map = {
-            "Message " : url,
+            "Url " : url,
             "Success" : 0,
             "Error Code" : 0
             }
