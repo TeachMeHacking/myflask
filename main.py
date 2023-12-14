@@ -46,13 +46,13 @@ def getUrl():
     map = {}
     if url == None:
         map = {
-            "Url " : "Null",
+            "Url" : "Null",
             "Success" : -1,
             "Error Code" : -1
                }
     else:
            map = {
-            "Url " : url,
+            "Url" : url,
             "Success" : 0,
             "Error Code" : 0
             }
